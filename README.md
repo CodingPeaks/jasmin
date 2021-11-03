@@ -3,6 +3,7 @@ Just Another Simple Monitoring Interface for Nagios.
 =======================
 
 Simple php script that allows you to monitor hosts and services of multiple nagios servers in real time in a simple web interface.
+
 Just copy the content of the www folder to a webserver directory of your choice it is ready to use!
 
 Requirements
