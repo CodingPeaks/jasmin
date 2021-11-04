@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>JASMIN®</title>
+</head>
+
+<body>
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <div class="col-lg-2 d-none d-sm-flex h-100 sidebar"></div>
+            <div class="col-lg-10 col-12 h-100">
+                <div class="row h-25">
+                    <div class="col-12 summary"></div>
+                </div>
+                <div class="row h-75 main-container">
+                    <div class="col-12 main p-0"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+<style>
+    html,
+    body {
+        height: 100%;
+    }
+    
+    .h-100 {
+        height: 100%;
+    }
+    
+    .sidebar {
+        background: blueviolet;
+    }
+    
+    .main-container::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .main-container {
+        background: rgb(2, 163, 150);
+        border-radius: 5px;
+        overflow: overlay;
+        max-height: calc(75% - 15px);
+    }
+    
+    .header>[class*='col'] {
+        font-weight: 400;
+        color: black;
+        border-left: 1px solid #a1a1a1;
+    }
+    
+    .header {
+        position: sticky;
+        top: 5vh;
+        z-index: 1;
+        background: #dddddd !important;
+    }
+    
+    .sticky-server-header {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+    
+    .server-header {
+        height: auto;
+        min-height: 5vh;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 600;
+        color: white;
+        background: #325554;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+    
+    .server-card {
+        margin: 10px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid gray;
+        border-radius: 5px;
+        box-shadow: 0px 0px 7px 0px black;
+        padding-bottom: 10px;
+    }
+    
+    .summary {
+        padding: 70px 50px;
+    }
+    
+    .host {
+        background: black;
+        color: white;
+    }
+    
+    .monitor:nth-child(even)>[class*='col'] {
+        background: #f4f2f2;
+    }
+    
+    .monitor:nth-child(odd)>[class*='col'] {
+        background: #e7e7e7;
+    }
+    
+    .row {
+        background: transparent;
+    }
+    
+    .monitor {
+        font-size: 11px;
+    }
+    
+    .monitor>[class*='col'] {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    
+    .status-label {
+        width: 100%;
+        margin: auto;
+        background: #16cf16;
+        border-radius: 3px;
+        padding: 0 8px;
+        margin: 3px 0;
+        color: white;
+    }
+    
+    .flex-vertical-center {
+        display: flex;
+        align-items: center;
+    }
+    
+    .flex-horizontal-center {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .host-border {
+        border: 1px solid #cfcfcf;
+        border-right: 0px;
+        border-top: 0;
+    }
+    
+    .host-divider {
+        margin-top: 10px;
+        border-top: 1px solid #dddddd;
+    }
+</style>
+
+<script>
+    async function fetchNagiosData() {
+        const response = await fetch('/jasmin/main.php');
+        const data = await response.json();
+        return data;
+    }
+    fetchNagiosData().then(data => {
+        console.log(data);
+        var html = ``;
+        for (var i = 0; i < data.length; i++) {
+
+            html += fetchHosts(data[i]);
+        }
+
+        $(".main").append(html);
+
+    });
+
+    function fetchHosts(data) {
+        var hosts = data.hosts;
+        var services = data.services;
+        var server = data.server;
+
+        var html = `<div class="row server-card">
+                    <div class="col-lg-12 col-12">
+                        <div class="row sticky-server-header">
+                            <div class="col-lg-12 col-12 server-header">${server.name} - ${server.host}</div>
+                        </div>
+                        <div class="row header">
+                            <div class="col-lg-2 col-4 pr-0">Host</div>
+                            <div class="col-lg-1 col-4 pr-0">Service</div>
+                            <div class="col-lg-1 col-4 pr-0">Status</div>
+                            <div class="col-lg-1 d-none d-sm-flex pr-0">Last Check</div>
+                            <div class="col-lg-1 d-none d-sm-flex pr-0">Duration</div>
+                            <div class="col-lg-1 d-none d-sm-flex pr-0">Attempt</div>
+                            <div class="col-lg-5 d-none d-sm-flex pr-0">Status Information</div>
+                        </div>`;
+
+        for (var host in hosts) {
+            html += fetchServices(services, host);
+
+        }
+
+        html += `</div></div>`;
+
+        return html;
+    }
+
+    function fetchServices(services, host) {
+        console.log(services);
+        var services = services[host];
+        var html = ``;
+        var first_row = true;
+        for (var service in services) {
+            var host_col = (first_row) ? `<div class="col-lg-2 col-4 flex-vertical-center host-border">${host}</div>` : ``;
+            var col_offset = (!first_row) ? `offset-lg-2 offset-4` : ``;
+            var host_divider = (first_row) ? `host-divider` : ``;
+            var last_check = Number(services[service].last_check);
+            var duration = Number(services[service].last_update) - Number(services[service].last_state_change);
+            console.log(new Date(duration * 1000).toISOString());
+
+            duration = new Date(duration * 1000).toISOString().substr(11, 8);
+            var attempt = services[service].current_attempt + "/" + services[service].max_attempts;
+            var status_information = services[service].plugin_output;
+
+            html += `<div class="row monitor ${host_divider}">
+                        ${host_col}
+                        <div class="col-lg-1 col-4 ${col_offset} pr-0 flex-vertical-center">${service}</div>
+                        <div class="col-lg-1 col-4 pr-2 pl-1 flex-vertical-center">
+                            ${serviceStatus(services[service])}
+                        </div>
+                        <div class="col-lg-1 d-none d-sm-flex pr-0 pl-0 flex-horizontal-center flex-vertical-center">
+                            ${getFormattedDate(last_check)}
+                        </div>
+                        <div class="col-lg-1 d-none d-sm-flex pr-0 flex-vertical-center">
+                            ${duration}
+                        </div>
+                        <div class="col-lg-1 d-none d-sm-flex pr-0 flex-vertical-center">
+                            ${attempt}
+                        </div>
+                        <div class="col-lg-5 d-none d-sm-flex pr-0 flex-vertical-center">
+                            ${status_information}
+                        </div>
+                     </div>`;
+
+            var first_row = false;
+        }
+
+        return html;
+    }
+
+    function serviceStatus(service) {
+        var current_state = service.current_state;
+        var states = {
+            "0": {
+                "text": "OK",
+                "bgColor": "bg-success",
+                "color": "text-white"
+            },
+
+            "1": {
+                "text": "WARNING",
+                "bgColor": "bg-warning",
+                "color": "text-dark"
+            },
+
+            "2": {
+                "text": "CRITICAL",
+                "bgColor": "bg-danger",
+                "color": "text-white"
+            },
+
+            "3": {
+                "text": "UNKNOWN",
+                "bgColor": "bg-secondary",
+                "color": "text-white"
+            }
+        }
+
+        return `<div class="status-label ${states[current_state].bgColor} ${states[current_state].color}">${states[current_state].text}</div>`;
+    }
+
+
+    function getFormattedDate(timestamp) {
+        var date = new Date(timestamp * 1000);
+
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        var sec = date.getSeconds();
+
+        month = (month < 10 ? "0" : "") + month;
+        day = (day < 10 ? "0" : "") + day;
+        hour = (hour < 10 ? "0" : "") + hour;
+        min = (min < 10 ? "0" : "") + min;
+        sec = (sec < 10 ? "0" : "") + sec;
+
+        var str = date.getFullYear() + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
+
+        return str;
+    }
+</script>
+
+</html>
