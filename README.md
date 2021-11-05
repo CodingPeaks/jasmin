@@ -1,28 +1,46 @@
-# Jasmin
-Just Another Simple Monitoring Interface for Nagios.
-=======================
 
-Simple php script that allows you to monitor hosts and services of multiple nagios servers in real time in a simple web interface.
+# JASMIN
+***Just A Simple Monitoring Interface for Nagios***
 
-Just copy the content of the www folder to a webserver directory of your choice it is ready to use!
+Monitor hosts and services of multiple Nagios Core servers in real time in a simple web interface.
 
 Requirements
 ============
 * PHP >= 7.0
+* Nagios (on the server you want to monitor)
 
 ## 📎 Menu
-- 🔨 [Installation](#installation)
-- 🚀 [Usage](#usage)
-- 📷 [Screenshot](#screenshot)
-- 📙 [Documentation](#documentation)
-- 👷‍♂️ [Contributing](#contributing)  
+- 🔨 [Installation](#-installation)
+- 🚀 [Usage](#-usage)
+- 📷 [Screenshot](#-screenshot)
+- 📙 [Documentation](#-documentation)
+- 👷‍♂️ [Contributing](#-contributing)  
 - 🐛 [Known Bugs](https://github.com/CodingPeaks/h2o/issues)
+
 
 🔨 Installation
 ============
 
-    bash install.sh
-    TODO
+### If you want to use Jasmin to monitor other nagios instances:
+
+1. Copy the content of this repository except for nagios.php to a directory on the server you want to monitor and make it accessible via HTTP (eg. on Apache, /var/www/html)
+2. Edit config.json and add the servers you want to monitor
+3. Access the web interface with your browser to verify the installation
+
+### If you want to make a nagios instance monitorable with Jasmin: 
+
+1. Copy nagios.php to a directory on the server you want to monitor and make it accessible via HTTP (eg. on Apache, /var/www/html)
+2. Edit nagios.php and set the correct path for the status.dat file
+3. Access nagios.php with your browser to verify the installation
+
+### If you want to make a nagios instance monitorable with Jasmin AND to use Jasmin to monitor other nagios instances: 
+
+1. Copy the content of this repository to a directory on the server you want to monitor and make it accessible via HTTP (eg. on Apache, /var/www/html)
+2. Edit config.json and add the servers you want to monitor
+3. Edit nagios.php and set the correct path for the status.dat file
+4. Access the web interface with your browser to verify the installation
+5. Access nagios.php with your browser to verify the installation
+
 
 🚀 Usage
 =====
