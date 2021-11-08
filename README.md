@@ -1,15 +1,17 @@
 
-# JASMIN
-***Just A Simple Monitoring Interface for Nagios***
+[![Just Another Simple Monitoring Interface for Nagios](https://raw.githubusercontent.com/CodingPeaks/jasmin/master/img/white_logo.png)](https://github.com/CodingPeaks/jasmin)
+## ***Just Another Simple Monitoring Interface for Nagios***
 
 Monitor hosts and services of multiple Nagios Core servers in real time in a simple web interface.
 
 Requirements
 ============
-* PHP >= 7.0
+* PHP >= 7
 * Nagios (on the server you want to monitor)
+* Web Server (Apache2, Nginx, Tomcat ecc..)
 
 ## 📎 Menu
+- 🙌 [Features](#-features)
 - 🔨 [Installation](#-installation)
 - 🚀 [Usage](#-usage)
 - 📷 [Screenshot](#-screenshot)
@@ -18,8 +20,13 @@ Requirements
 - 🐛 [Known Bugs](https://github.com/CodingPeaks/h2o/issues)
 
 
-🔨 Installation
-============
+ ## 🙌 Features
+* [✔️] Super easy to use
+* [✔️] Monitor all devices simultaneously
+* [✔️] GPL-3.0 License
+* [✔️] Only need Nagios, PHP and Apache
+
+## 🔨 Installation
 
 ### If you want to use Jasmin to monitor other nagios instances:
 
@@ -68,3 +75,4 @@ TODO
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+![enter image description here](https://github.com/CodingPeaks/jasmin/blob/master/img/white_logo.png)
