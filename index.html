@@ -5,181 +5,130 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="apple-touch-icon" sizes="120x120" href="icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+    <link rel="manifest" href="icons/site.webmanifest">
+    <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>JASMIN®</title>
+    <link rel="stylesheet" href="style.css">
+
+    <title>Jasmin</title>
 </head>
 
 <body>
     <div class="container-fluid h-100">
         <div class="row h-100">
-            <div class="col-lg-2 d-none d-sm-flex h-100 sidebar"></div>
-            <div class="col-lg-10 col-12 h-100">
-                <div class="row h-25">
-                    <div class="col-12 summary"></div>
+            <div class="top-bar">
+                <div class="row h-100">
+                    <div class="col-3 h-100">
+                        <img class="logo" src="img/logo.png">
+                    </div>
                 </div>
+                <div class="col-9 d-lg-none h-100 flex-vertical-center pr-0">
+                    <select class="form-select server-select-mobile" aria-label="Nagios server select">
+                        <option selected="">All Servers</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-12 col-12 pt-10" style="height: calc(100% - 7%);">
                 <div class="row h-75 main-container">
-                    <div class="col-12 main p-0"></div>
+                    <div class="col-12 main p-0 h-100"></div>
+                </div>
+                <div class="row bot-bar h-25">
+                    <div class="col-12 summary">
+                        <div class="row">
+                            <div class="col-lg-3 d-none d-sm-block h-100">
+                                <select class="form-select server-select" aria-label="Nagios server select">
+                                    <option selected="">All Servers</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3 d-none d-sm-block">
+                                <p class="info">
+                                Last Updated: <span id="last_updated"></span>
+                                <br>
+                                Updated every  <span id="update_interval"></span> seconds
+                                <br>
+                                <b>Jasmin</b> (GPL-3.0 License)
+                                <br>
+                                <a href="https://github.com/CodingPeaks/jasmin" target="_blank">https://github.com/CodingPeaks/jasmin</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 
-<style>
-    html,
-    body {
-        height: 100%;
-    }
-    
-    .h-100 {
-        height: 100%;
-    }
-    
-    .sidebar {
-        background: blueviolet;
-    }
-    
-    .main-container::-webkit-scrollbar {
-        display: none;
-    }
-    
-    .main-container {
-        background: rgb(2, 163, 150);
-        border-radius: 5px;
-        overflow: overlay;
-        max-height: calc(75% - 15px);
-    }
-    
-    .header>[class*='col'] {
-        font-weight: 400;
-        color: black;
-        border-left: 1px solid #a1a1a1;
-    }
-    
-    .header {
-        position: sticky;
-        top: 5vh;
-        z-index: 1;
-        background: #dddddd !important;
-    }
-    
-    .sticky-server-header {
-        position: sticky;
-        top: 0;
-        z-index: 1;
-    }
-    
-    .server-header {
-        height: auto;
-        min-height: 5vh;
-        display: flex;
-        align-items: center;
-        font-size: 14px;
-        font-weight: 600;
-        color: white;
-        background: #325554;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-    }
-    
-    .server-card {
-        margin: 10px;
-        margin-bottom: 15px;
-        border-bottom: 1px solid gray;
-        border-radius: 5px;
-        box-shadow: 0px 0px 7px 0px black;
-        padding-bottom: 10px;
-    }
-    
-    .summary {
-        padding: 70px 50px;
-    }
-    
-    .host {
-        background: black;
-        color: white;
-    }
-    
-    .monitor:nth-child(even)>[class*='col'] {
-        background: #f4f2f2;
-    }
-    
-    .monitor:nth-child(odd)>[class*='col'] {
-        background: #e7e7e7;
-    }
-    
-    .row {
-        background: transparent;
-    }
-    
-    .monitor {
-        font-size: 11px;
-    }
-    
-    .monitor>[class*='col'] {
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
-    
-    .status-label {
-        width: 100%;
-        margin: auto;
-        background: #16cf16;
-        border-radius: 3px;
-        padding: 0 8px;
-        margin: 3px 0;
-        color: white;
-    }
-    
-    .flex-vertical-center {
-        display: flex;
-        align-items: center;
-    }
-    
-    .flex-horizontal-center {
-        display: flex;
-        justify-content: center;
-    }
-    
-    .host-border {
-        border: 1px solid #cfcfcf;
-        border-right: 0px;
-        border-top: 0;
-    }
-    
-    .host-divider {
-        margin-top: 10px;
-        border-top: 1px solid #dddddd;
-    }
-</style>
-
 <script>
+    var nagiosData;
+    var selectedServer = -1;
+    var updateInterval = 15; //seconds
+
     async function fetchNagiosData() {
         const response = await fetch('/jasmin/main.php');
         const data = await response.json();
         return data;
     }
-    fetchNagiosData().then(data => {
-        console.log(data);
-        var html = ``;
-        for (var i = 0; i < data.length; i++) {
 
+    function fetchAll(server_index) {
+
+        fetchNagiosData().then(data => {
+            console.log(data);
+            buildServerSelects(data);
+            buildMonitoringInterface();
+            updateMonitoringInterface();
+            setInfo();
+        });
+
+    }
+
+    function buildServerSelects(data) {
+        var html = `<option value="-1" selected>All Servers</option>`;
+        for (var i = 0; i < data.length; i++) {
+            var server = data[i].server;
+            html += `<option value="${i}" >${server.name} (${server.host})</option>`;
+        }
+        $("select").html(html);
+
+        nagiosData = data;
+    }
+
+    function buildMonitoringInterface() {
+        var html = ``;
+        var data = (selectedServer >= 0) ? nagiosData.filter((value, index) => index == selectedServer) : nagiosData;
+        for (var i = 0; i < data.length; i++) {
             html += fetchHosts(data[i]);
         }
+        $(".main").html(html);
+    }
 
-        $(".main").append(html);
-
-    });
+    function updateMonitoringInterface() {
+        setInfo();
+        fetchNagiosData().then(response => {
+            var html = ``;
+            var data = (selectedServer >= 0) ? response.filter((value, index) => index == selectedServer) : response;
+            console.log(data);
+            for (var i = 0; i < data.length; i++) {
+                html += fetchHosts(data[i]);
+            }
+            $(".main").html(html);
+            setTimeout(function () { updateMonitoringInterface(); }, updateInterval * 1000);
+        });
+    }
 
     function fetchHosts(data) {
         var hosts = data.hosts;
@@ -192,18 +141,18 @@
                             <div class="col-lg-12 col-12 server-header">${server.name} - ${server.host}</div>
                         </div>
                         <div class="row header">
-                            <div class="col-lg-2 col-4 pr-0">Host</div>
+                            <div class="col-lg-1 col-4 pr-0">Host</div>
                             <div class="col-lg-1 col-4 pr-0">Service</div>
                             <div class="col-lg-1 col-4 pr-0">Status</div>
-                            <div class="col-lg-1 d-none d-sm-flex pr-0">Last Check</div>
-                            <div class="col-lg-1 d-none d-sm-flex pr-0">Duration</div>
-                            <div class="col-lg-1 d-none d-sm-flex pr-0">Attempt</div>
+                            <div class="col-lg-1 d-none d-sm-flex pr-0 pl-0 flex-horizontal-center flex-vertical-center">Last Check</div>
+                            <div class="col-lg-1 d-none d-sm-flex pr-0 pl-0 flex-horizontal-center flex-vertical-center">Duration</div>
+                            <div class="col-lg-1 d-none d-sm-flex pr-0 pl-0 flex-horizontal-center flex-vertical-center">Next Check</div>
+                            <div class="col-lg-1 d-none d-sm-flex pr-0 pl-0 flex-horizontal-center flex-vertical-center">Attempt</div>
                             <div class="col-lg-5 d-none d-sm-flex pr-0">Status Information</div>
                         </div>`;
 
         for (var host in hosts) {
-            html += fetchServices(services, host);
-
+            html += fetchServices(services, host, hosts);
         }
 
         html += `</div></div>`;
@@ -211,39 +160,43 @@
         return html;
     }
 
-    function fetchServices(services, host) {
-        console.log(services);
+    function fetchServices(services, host, hosts) {
         var services = services[host];
         var html = ``;
         var first_row = true;
         for (var service in services) {
-            var host_col = (first_row) ? `<div class="col-lg-2 col-4 flex-vertical-center host-border">${host}</div>` : ``;
-            var col_offset = (!first_row) ? `offset-lg-2 offset-4` : ``;
-            var host_divider = (first_row) ? `host-divider` : ``;
+            var service_status = services[service].current_state;
             var last_check = Number(services[service].last_check);
+            service_status = (last_check == 0) ? 4 : service_status;
+            var host_status = hosts[host].current_state;
+            var host_col = (first_row) ? `<div class="col-lg-1 col-4 flex-vertical-center host-border host-state-${host_status}">${host}</div>` : ``;
+            var col_offset = (!first_row) ? `offset-lg-1 offset-4` : ``;
+            var host_divider = (first_row) ? `host-divider` : ``;
             var duration = Number(services[service].last_update) - Number(services[service].last_state_change);
-            console.log(new Date(duration * 1000).toISOString());
-
             duration = new Date(duration * 1000).toISOString().substr(11, 8);
+            var next_check = Number(services[service].next_check);
             var attempt = services[service].current_attempt + "/" + services[service].max_attempts;
             var status_information = services[service].plugin_output;
 
             html += `<div class="row monitor ${host_divider}">
                         ${host_col}
-                        <div class="col-lg-1 col-4 ${col_offset} pr-0 flex-vertical-center">${service}</div>
-                        <div class="col-lg-1 col-4 pr-2 pl-1 flex-vertical-center">
-                            ${serviceStatus(services[service])}
+                        <div class="col-lg-1 col-4 ${col_offset} pr-0 flex-vertical-center service-state-${service_status}">${service}</div>
+                        <div class="col-lg-1 col-4 pr-2 pl-1 flex-vertical-center service-state-${service_status}">
+                            ${serviceStatus(service_status)}
                         </div>
-                        <div class="col-lg-1 d-none d-sm-flex pr-0 pl-0 flex-horizontal-center flex-vertical-center">
-                            ${getFormattedDate(last_check)}
+                        <div class="col-lg-1 d-none d-sm-flex pr-0 pl-0 flex-horizontal-center flex-vertical-center service-state-${service_status}">
+                            ${(last_check == 0) ? "N/A" : getFormattedDate(last_check)}
                         </div>
-                        <div class="col-lg-1 d-none d-sm-flex pr-0 flex-vertical-center">
+                        <div class="col-lg-1 d-none d-sm-flex pr-0 pl-0 flex-horizontal-center flex-vertical-center service-state-${service_status}">
                             ${duration}
                         </div>
-                        <div class="col-lg-1 d-none d-sm-flex pr-0 flex-vertical-center">
+                        <div class="col-lg-1 d-none d-sm-flex pr-0 pl-0 flex-horizontal-center flex-vertical-center service-state-${service_status}">
+                            ${getFormattedDate(next_check)}
+                        </div>
+                        <div class="col-lg-1 d-none d-sm-flex pr-0 pl-0 flex-horizontal-center flex-vertical-center service-state-${service_status}">
                             ${attempt}
                         </div>
-                        <div class="col-lg-5 d-none d-sm-flex pr-0 flex-vertical-center">
+                        <div class="col-lg-5 d-none d-sm-flex pr-0 flex-vertical-center service-state-${service_status}">
                             ${status_information}
                         </div>
                      </div>`;
@@ -254,8 +207,7 @@
         return html;
     }
 
-    function serviceStatus(service) {
-        var current_state = service.current_state;
+    function serviceStatus(current_state) {
         var states = {
             "0": {
                 "text": "OK",
@@ -277,6 +229,11 @@
 
             "3": {
                 "text": "UNKNOWN",
+                "bgColor": "bg-secondary",
+                "color": "text-white"
+            },
+            "4": {
+                "text": "PENDING",
                 "bgColor": "bg-secondary",
                 "color": "text-white"
             }
@@ -305,6 +262,39 @@
 
         return str;
     }
+
+    function getCurrentFormattedDate() {
+        var date = new Date();
+
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        var sec = date.getSeconds();
+
+        month = (month < 10 ? "0" : "") + month;
+        day = (day < 10 ? "0" : "") + day;
+        hour = (hour < 10 ? "0" : "") + hour;
+        min = (min < 10 ? "0" : "") + min;
+        sec = (sec < 10 ? "0" : "") + sec;
+
+        var str = date.getFullYear() + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
+
+        return str;
+    }
+
+    function setInfo(){
+        $("#update_interval").html(updateInterval);
+        $("#last_updated").html(getCurrentFormattedDate());
+    }
+
+    $('select').on('change', function () {
+        selectedServer = Number(this.value);
+        buildMonitoringInterface();
+    });
+
+    fetchAll();
+
 </script>
 
 </html>
