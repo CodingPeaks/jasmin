@@ -14,56 +14,120 @@
     <meta name="theme-color" content="#ffffff">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=0.1">
 
     <title>Jasmin</title>
 </head>
 
 <body>
-    <div class="container-fluid h-100">
-        <div class="row h-100">
-            <div class="top-bar">
-                <div class="row h-100">
-                    <div class="col-3 h-100">
-                        <img class="logo" src="img/logo.png">
-                    </div>
-                </div>
-                <div class="col-9 d-lg-none h-100 flex-vertical-center pr-0">
-                    <select class="form-select server-select-mobile" aria-label="Nagios server select">
-                        <option selected="">All Servers</option>
-                    </select>
-                </div>
+    <div class="container-fluid h-100 p-0">
+        <div class="row top-bar m-0">
+            <div class="col-5 h-100">
+                <img class="logo" src="img/logo.png">
             </div>
-            <div class="col-lg-12 col-12 pt-10" style="height: calc(100% - 7%);">
-                <div class="row h-75 main-container">
-                    <div class="col-12 main p-0 h-100"></div>
-                </div>
-                <div class="row bot-bar h-25">
-                    <div class="col-12 summary">
-                        <div class="row">
-                            <div class="col-lg-3 d-none d-sm-block h-100">
-                                <select class="form-select server-select" aria-label="Nagios server select">
-                                    <option selected="">All Servers</option>
-                                </select>
-                            </div>
+            <div class="col-7 d-lg-none h-100 flex-vertical-center">
+                <select class="form-select server-select-mobile" aria-label="Nagios server select">
+                    <option selected="">All Servers</option>
+                </select>
+            </div>
+        </div>
+        <div class="content col-lg-12 col-12 pt-10">
+            <div class="row main-container">
+                <div class="col-12 main p-0 h-100"></div>
+            </div>
+            <div class="row bot-bar">
+                <div class="col-12 summary">
+                    <div class="row">
+                        <div class="col-lg-3 d-none d-sm-block">
+                            <select class="form-select server-select" aria-label="Nagios server select">
+                                <option selected="">All Servers</option>
+                            </select>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-3 d-none d-sm-block">
-                                <p class="info">
+                        <div class="col-lg-3 col-6 offset-lg-1 service-totals">
+                            Host Status Totals
+                        </div>
+                        <div class="col-lg-3 col-6 offset-lg-1 host-totals">
+                            Service Status Totals
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 d-none d-sm-block">
+                            <p class="info">
                                 Last Updated: <span id="last_updated"></span>
                                 <br>
-                                Updated every  <span id="update_interval"></span> seconds
+                                Updated every <span id="update_interval"></span> seconds
                                 <br>
                                 <b>Jasmin</b> (GPL-3.0 License)
                                 <br>
-                                <a href="https://github.com/CodingPeaks/jasmin" target="_blank">https://github.com/CodingPeaks/jasmin</a>
-                                </p>
+                                <a href="https://github.com/CodingPeaks/jasmin"
+                                    target="_blank">https://github.com/CodingPeaks/jasmin</a>
+                            </p>
+                        </div>
+                        <div class="col-lg-3 col-6 offset-lg-1">
+                            <div class="row host-total-summary">
+                                <div class="col pl-2 pr-2">
+                                    <label for="host_upk_total" class="host-total-label">Up</label>
+                                    <input type="text" class="form-control total-label" id="host_up_total">
+                                </div>
+                                <div class="col pl-2 pr-2">
+                                    <label for="host_down_total" class="host-total-label">Down</label>
+                                    <input type="text" class="form-control total-label" id="host_down_total">
+                                </div>
+                                <div class="col pl-2 pr-2">
+                                    <label for="host_unreachable_total" class="host-total-label">Unreachable</label>
+                                    <input type="text" class="form-control total-label" id="host_unreachable_total">
+                                </div>
+                                <div class="col pl-2 pr-2">
+                                    <label for="host_pending_total" class="host-total-label">Pending</label>
+                                    <input type="text" class="form-control total-label" id="host_pending_total">
+                                </div>
+                                <div class="col pl-2 pr-2">
+                                    <label for="host_problems_total" class="host-total-label">All Problems</label>
+                                    <input type="text" class="form-control total-label" id="host_problems_total">
+                                </div>
+                                <div class="col pl-2 pr-2">
+                                    <label for="host_types_total" class="host-total-label">All Types</label>
+                                    <input type="text" class="form-control total-label" id="host_types_total">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-6 offset-lg-1">
+                            <div class="row host-total-summary">
+                                <div class="col pl-2 pr-2">
+                                    <label for="host_upk_total" class="host-total-label">Ok</label>
+                                    <input type="text" class="form-control total-label" id="host_up_total">
+                                </div>
+                                <div class="col pl-2 pr-2">
+                                    <label for="host_down_total" class="host-total-label">Warning</label>
+                                    <input type="text" class="form-control total-label" id="host_down_total">
+                                </div>
+                                <div class="col pl-2 pr-2">
+                                    <label for="host_unreachable_total" class="host-total-label">Unknown</label>
+                                    <input type="text" class="form-control total-label" id="host_unreachable_total">
+                                </div>
+                                <div class="col pl-2 pr-2">
+                                    <label for="host_pending_total" class="host-total-label">Critical</label>
+                                    <input type="text" class="form-control total-label" id="host_pending_total">
+                                </div>
+                                <div class="col pl-2 pr-2">
+                                    <label for="host_problems_total" class="host-total-label">Pending</label>
+                                    <input type="text" class="form-control total-label" id="host_problems_total">
+                                </div>
+                                <div class="col pl-2 pr-2">
+                                    <label for="host_problems_total" class="host-total-label">All Problems</label>
+                                    <input type="text" class="form-control total-label" id="host_problems_total">
+                                </div>
+                                <div class="col pl-2 pr-2">
+                                    <label for="host_types_total" class="host-total-label">All Types</label>
+                                    <input type="text" class="form-control total-label" id="host_types_total">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
     </div>
 
@@ -283,7 +347,7 @@
         return str;
     }
 
-    function setInfo(){
+    function setInfo() {
         $("#update_interval").html(updateInterval);
         $("#last_updated").html(getCurrentFormattedDate());
     }
