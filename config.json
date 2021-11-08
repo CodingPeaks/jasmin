@@ -1,16 +1,51 @@
 {
     "servers": [
         {
-            "name":"SERVER1",
-            "host":"IPADDRESS",
-            "api_path":"nagios.php",
+            "name":"Sottosistema1",
+            "host":"192.168.1.133",
+            "api_path":"jasmin/nagios.php",
             "protocol":"http",
             "port":"80"
         },
         {
-            "name":"SERVER2",
-            "host":"IPADDRESS",
-            "api_path":"nagios.php",
+            "name":"Sottosistema2",
+            "host":"192.168.1.133",
+            "api_path":"jasmin/nagios.php",
+            "protocol":"http",
+            "port":"80"
+        },
+        {
+            "name":"Sottosistema3",
+            "host":"192.168.1.133",
+            "api_path":"jasmin/nagios.php",
+            "protocol":"http",
+            "port":"80"
+        },
+        {
+            "name":"Sottosistema4",
+            "host":"192.168.1.133",
+            "api_path":"jasmin/nagios.php",
+            "protocol":"http",
+            "port":"80"
+        },
+        {
+            "name":"Sottosistema5",
+            "host":"192.168.1.133",
+            "api_path":"jasmin/nagios.php",
+            "protocol":"http",
+            "port":"80"
+        },
+        {
+            "name":"Sottosistema6",
+            "host":"192.168.1.133",
+            "api_path":"jasmin/nagios.php",
+            "protocol":"http",
+            "port":"80"
+        },
+        {
+            "name":"Sottosistema7",
+            "host":"192.168.1.133",
+            "api_path":"jasmin/nagios.php",
             "protocol":"http",
             "port":"80"
         }
