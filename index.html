@@ -66,7 +66,7 @@
                         <div class="col-lg-3 col-6 offset-lg-1">
                             <div class="row host-total-summary">
                                 <div class="col pl-2 pr-2">
-                                    <label for="host_upk_total" class="host-total-label">Up</label>
+                                    <label for="host_up_total" class="host-total-label">Up</label>
                                     <input type="text" class="form-control total-label" id="host_up_total">
                                 </div>
                                 <div class="col pl-2 pr-2">
@@ -94,32 +94,32 @@
                         <div class="col-lg-3 col-6 offset-lg-1">
                             <div class="row host-total-summary">
                                 <div class="col pl-2 pr-2">
-                                    <label for="host_upk_total" class="host-total-label">Ok</label>
-                                    <input type="text" class="form-control total-label" id="host_up_total">
+                                    <label for="service_ok_total" class="host-total-label">Ok</label>
+                                    <input type="text" class="form-control total-label" id="service_ok_total">
                                 </div>
                                 <div class="col pl-2 pr-2">
-                                    <label for="host_down_total" class="host-total-label">Warning</label>
-                                    <input type="text" class="form-control total-label" id="host_down_total">
+                                    <label for="service_warning_total" class="host-total-label">Warning</label>
+                                    <input type="text" class="form-control total-label" id="service_warning_total">
                                 </div>
                                 <div class="col pl-2 pr-2">
-                                    <label for="host_unreachable_total" class="host-total-label">Unknown</label>
-                                    <input type="text" class="form-control total-label" id="host_unreachable_total">
+                                    <label for="service_unknown_total" class="host-total-label">Unknown</label>
+                                    <input type="text" class="form-control total-label" id="service_unknown_total">
                                 </div>
                                 <div class="col pl-2 pr-2">
-                                    <label for="host_pending_total" class="host-total-label">Critical</label>
-                                    <input type="text" class="form-control total-label" id="host_pending_total">
+                                    <label for="service_critical_total" class="host-total-label">Critical</label>
+                                    <input type="text" class="form-control total-label" id="service_critical_total">
                                 </div>
                                 <div class="col pl-2 pr-2">
-                                    <label for="host_problems_total" class="host-total-label">Pending</label>
-                                    <input type="text" class="form-control total-label" id="host_problems_total">
+                                    <label for="service_pending_total" class="host-total-label">Pending</label>
+                                    <input type="text" class="form-control total-label" id="service_pending_total">
                                 </div>
                                 <div class="col pl-2 pr-2">
-                                    <label for="host_problems_total" class="host-total-label">All Problems</label>
-                                    <input type="text" class="form-control total-label" id="host_problems_total">
+                                    <label for="service_problems_total" class="host-total-label">All Problems</label>
+                                    <input type="text" class="form-control total-label" id="service_problems_total">
                                 </div>
                                 <div class="col pl-2 pr-2">
-                                    <label for="host_types_total" class="host-total-label">All Types</label>
-                                    <input type="text" class="form-control total-label" id="host_types_total">
+                                    <label for="service_types_total" class="host-total-label">All Types</label>
+                                    <input type="text" class="form-control total-label" id="service_types_total">
                                 </div>
                             </div>
                         </div>
@@ -140,7 +140,27 @@
 <script>
     var nagiosData;
     var selectedServer = -1;
-    var updateInterval = 15; //seconds
+    var updateInterval = 5; //seconds
+
+    var total = {
+        "host": {
+            "up": 0,
+            "down": 0,
+            "unreachable": 0,
+            "pending": 0,
+            "problems": 0,
+            "all": 0
+        },
+        "service": {
+            "ok": 0,
+            "warning": 0,
+            "unknown": 0,
+            "critical": 0,
+            "pending": 0,
+            "problems": 0,
+            "all": 0
+        }
+    }
 
     async function fetchNagiosData() {
         const response = await fetch('/jasmin/main.php');
@@ -183,6 +203,10 @@
     function updateMonitoringInterface() {
         setInfo();
         fetchNagiosData().then(response => {
+
+            Object.keys(total.host).forEach(v => total.host[v] = 0);
+            Object.keys(total.service).forEach(v => total.service[v] = 0);
+
             var html = ``;
             var data = (selectedServer >= 0) ? response.filter((value, index) => index == selectedServer) : response;
             console.log(data);
@@ -216,10 +240,13 @@
                         </div>`;
 
         for (var host in hosts) {
+            updateHostTotals(hosts[host]);
             html += fetchServices(services, host, hosts);
         }
 
         html += `</div></div>`;
+
+        
 
         return html;
     }
@@ -229,6 +256,7 @@
         var html = ``;
         var first_row = true;
         for (var service in services) {
+            updateServiceTotals(services[service]);
             var service_status = services[service].current_state;
             var last_check = Number(services[service].last_check);
             service_status = (last_check == 0) ? 4 : service_status;
@@ -269,6 +297,111 @@
         }
 
         return html;
+    }
+
+    function updateHostTotals(host) {
+        var state = host.current_state;
+        total.host.all ++;
+
+        switch(state){
+            case "0":
+                total.host.up ++;
+                break;
+
+            case "1":
+                total.host.down ++;
+                total.host.problems ++;
+                break;
+
+            case "2":
+                total.host.unreachable ++;
+                total.host.problems ++;
+                break;
+        }
+
+
+        console.log(total.host);
+        $("#host_types_total").val(total.host.all);
+        $("#host_up_total").val(total.host.up);
+        $("#host_down_total").val(total.host.down);
+        $("#host_unreachable_total").val(total.host.unreachable);
+        $("#host_pending_total").val(total.host.pending);
+        $("#host_problems_total").val(total.host.problems);
+
+        if(total.host.up) { 
+            $("#host_up_total").css({"background": "#16cf16", "color": "white"}); 
+        } else { 
+            $("#host_up_total").css({"background": "white", "color": "black"});
+        }
+
+        if(total.host.down) { 
+            $("#host_down_total").css({"background": "#dc3545", "color": "white"}); 
+        } else { 
+            $("#host_down_total").css({"background": "white", "color": "black"});
+        }
+
+        if(total.host.problems) { 
+            $("#host_problems_total").css({"background": "#1eb9ff", "color": "white"}); 
+        } else { 
+            $("#host_problems_total").css({"background": "white", "color": "black"});
+        }
+        
+    }
+
+    function updateServiceTotals(service) {
+        var state = service.current_state;
+        total.service.all ++;
+
+        switch(state){
+            case "0":
+                total.service.ok ++;
+                break;
+
+            case "1":
+                total.service.warning ++;
+                total.service.problems ++;
+                break;
+
+            case "2":
+                total.service.critical ++;
+                total.service.problems ++;
+                break;
+        }
+
+
+        $("#service_types_total").val(total.service.all);
+        $("#service_ok_total").val(total.service.ok);
+        $("#service_warning_total").val(total.service.warning);
+        $("#service_critical_total").val(total.service.critical);
+        $("#service_unknown_total").val(total.service.unknown);
+        $("#service_pending_total").val(total.service.pending);
+        $("#service_problems_total").val(total.service.problems);
+        
+
+        if(total.service.ok) { 
+            $("#service_ok_total").css({"background": "#16cf16", "color": "white"}); 
+        } else { 
+            $("#service_ok_total").css({"background": "white", "color": "black"});
+        }
+
+        if(total.service.warning) { 
+            $("#service_warning_total").css({"background": "#e2cd0f", "color": "black"}); 
+        } else { 
+            $("#service_warning_total").css({"background": "white", "color": "black"});
+        }
+
+        if(total.service.critical) { 
+            $("#service_critical_total").css({"background": "#dc3545", "color": "white"}); 
+        } else { 
+            $("#service_critical_total").css({"background": "white", "color": "black"});
+        }
+
+        if(total.service.problems) { 
+            $("#service_problems_total").css({"background": "#1eb9ff", "color": "white"}); 
+        } else { 
+            $("#service_problems_total").css({"background": "white", "color": "black"});
+        }
+        
     }
 
     function serviceStatus(current_state) {

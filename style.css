@@ -45,6 +45,10 @@ body {
     border-left: 1px solid #a1a1a1;
 }
 
+.bg-success {
+    background-color: #16cf16!important;
+}
+
 .host-state-0 {}
 
 .host-state-1 {
@@ -54,6 +58,7 @@ body {
 .host-state-2 {
     background: #fff7cc !important;
 }
+
 
 .service-state-0 {}
 
@@ -122,7 +127,9 @@ body {
 .total-label {
     text-align: center;
     padding: 0;
-    height: 20px;
+    height: 25px;
+    pointer-events: none;
+    
 }
 
 .host-total-summary>[class*='col'] {
