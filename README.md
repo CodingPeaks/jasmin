@@ -4,21 +4,17 @@
 
 Monitor hosts and services of multiple Nagios Core servers in real time in a simple web interface.
 
-Requirements
-============
-* PHP >= 7
-* Nagios (on the server you want to monitor)
-* Web Server (Apache2, Nginx, Tomcat ecc..)
-
 ## 📎 Menu
+- 📷 [About Project](#-about-project)
 - 🙌 [Features](#-features)
 - 🔨 [Installation](#-installation)
 - 🚀 [Usage](#-usage)
-- 📷 [Screenshot](#-screenshot)
 - 📙 [Documentation](#-documentation)
 - 👷‍♂️ [Contributing](#-contributing)  
 - 🐛 [Known Bugs](https://github.com/CodingPeaks/h2o/issues)
 
+## 📷 About Project
+[![Just Another Simple Monitoring Interface for Nagios](https://raw.githubusercontent.com/CodingPeaks/jasmin/master/img/screenshot.png)](https://github.com/CodingPeaks/jasmin)
 
  ## 🙌 Features
 * [✔️] Super easy to use
@@ -27,6 +23,11 @@ Requirements
 * [✔️] Only need Nagios, PHP and Apache
 
 ## 🔨 Installation
+
+### Requirements
+* PHP >= 7
+* Nagios (on the server you want to monitor)
+* Web Server (Apache2, Nginx, Tomcat ecc..)
 
 ### If you want to use Jasmin to monitor other nagios instances:
 
@@ -49,19 +50,13 @@ Requirements
 5. Access nagios.php with your browser to verify the installation
 
 
-🚀 Usage
-=====
-
+## 🚀 Usage
 TODO
 
-📷 Screenshot
-=====
+## 📙 Documentation
+TODO
 
- 📙 Documentation
-=====
-
-👷‍♂️ Contributing 
-=======
+## 👷‍♂️ Contributing 
 <!-- ALL-CONTRIBUTORS-LIST:START -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -75,4 +70,3 @@ TODO
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-![enter image description here](https://github.com/CodingPeaks/jasmin/blob/master/img/white_logo.png)
