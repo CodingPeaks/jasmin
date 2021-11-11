@@ -64,9 +64,9 @@ function outputJson($hosts, $services, $program)
     }
 
     // hosts
-    echo '  "hosts": {' . "\n";
+    echo '  "hosts": [' . "\n";
     foreach ($hosts as $hostName => $hostArray) {
-        echo '   "' . jsonString($hostName) . '": {' . "\n";
+        echo '   {' . "\n";
         foreach ($hostArray as $key => $val) {
             echo '      "' . jsonString($key) . '": "' . jsonString($val) . '"' . (isLast($hostArray, $key) ? '' : ',') . "\n";
         }
@@ -74,21 +74,21 @@ function outputJson($hosts, $services, $program)
         echo '   }' . (isLast($hosts, $hostName) ? '' : ',') . "\n";
     }
     unset($hostName, $hostArray);
-    echo '  },' . "\n";
+    echo '  ],' . "\n";
 
     // loop through the services
     echo '  "services": {' . "\n";
     foreach ($services as $hostName => $service) {
-        echo '   "' . jsonString($hostName) . '": {' . "\n";
+        echo '   "' . jsonString($hostName) . '": [' . "\n";
         foreach ($service as $serviceDesc => $serviceArray) {
-            echo '   "' . jsonString($serviceDesc) . '": {' . "\n";
+            echo '   {' . "\n";
             foreach ($serviceArray as $key => $val) {
                 echo '      "' . jsonString($key) . '": "' . jsonString($val) . '"' . (isLast($serviceArray, $key) ? '' : ',') . "\n";
             }
             unset($key, $val);
             echo '   }' . (isLast($service, $serviceDesc) ? '' : ',') . "\n";
         }
-        echo '   }' . (isLast($services, $hostName) ? '' : ',') . "\n";
+        echo '   ]' . (isLast($services, $hostName) ? '' : ',') . "\n";
         unset($serviceDesc, $serviceArray);
     }
     unset($hostName, $service);
