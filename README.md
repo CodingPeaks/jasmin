@@ -1,6 +1,6 @@
 
-[![Just Another Simple Monitoring Interface for Nagios](https://raw.githubusercontent.com/CodingPeaks/jasmin/master/img/white_logo.png)](https://github.com/CodingPeaks/jasmin)
-## ***Just Another Simple Monitoring Interface for Nagios***
+[![Just A Simple Monitoring Interface for Nagios](https://raw.githubusercontent.com/CodingPeaks/jasmin/master/img/white_logo.png)](https://github.com/CodingPeaks/jasmin)
+## ***Just A Simple Monitoring Interface for Nagios***
 
 Monitor hosts and services of multiple Nagios Core servers in real time in a simple web interface.
 
@@ -14,7 +14,7 @@ Monitor hosts and services of multiple Nagios Core servers in real time in a sim
 - 🐛 [Known Bugs](https://github.com/CodingPeaks/h2o/issues)
 
 ## 📷 About Project
-[![Just Another Simple Monitoring Interface for Nagios](https://raw.githubusercontent.com/CodingPeaks/jasmin/master/img/screenshot.png)](https://github.com/CodingPeaks/jasmin)
+[![Just A Simple Monitoring Interface for Nagios](https://raw.githubusercontent.com/CodingPeaks/jasmin/master/img/screenshot.png)](https://github.com/CodingPeaks/jasmin)
 
  ## 🙌 Features
 * [✔️] Super easy to use
