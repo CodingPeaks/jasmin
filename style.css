@@ -227,7 +227,7 @@ p.info {
 
 .bot-bar {
     height: auto;
-    position: sticky;
+    position: fixed;
     bottom: -1px;
     background: #253c3c;
     z-index: 1;
