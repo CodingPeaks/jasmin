@@ -36,18 +36,26 @@ function fetchAll() {
         console.log(data);
         buildServerSelects(data);
         buildMonitoringInterface();
-        updateMonitoringInterface();
+        setInterval(function () { updateMonitoringInterface() }, updateInterval * 1000);
         setInfo();
     });
 
 }
 
 function filterHosts(hosts, state) {
-    return hosts.filter(host => host.current_state == state);
+    if (state != 'all') {
+        return hosts.filter(host => host.current_state == state);
+    } else {
+        return hosts.filter(host => host.current_state != 0);
+    }
 }
 
 function filterServices(services, state) {
-    return services.filter(service => service.current_state == state);
+    if (state != 'all') {
+        return services.filter(service => service.current_state == state);
+    } else {
+        return services.filter(service => service.current_state != 0);
+    }
 }
 
 function buildServerSelects(data) {
@@ -62,6 +70,8 @@ function buildServerSelects(data) {
 }
 
 function buildMonitoringInterface() {
+    Object.keys(total.host).forEach(v => total.host[v] = 0);
+    Object.keys(total.service).forEach(v => total.service[v] = 0);
     var html = ``;
     var data = (selectedServer >= 0) ? nagiosData.filter((value, index) => index == selectedServer) : nagiosData;
     for (var i = 0; i < data.length; i++) {
@@ -72,6 +82,7 @@ function buildMonitoringInterface() {
 
 function updateMonitoringInterface() {
     setInfo();
+    console.log("updating interface");
     fetchNagiosData().then(response => {
 
         Object.keys(total.host).forEach(v => total.host[v] = 0);
@@ -82,7 +93,6 @@ function updateMonitoringInterface() {
             html += fetchHosts(data[i]);
         }
         $(".main").html(html);
-        setTimeout(function () { updateMonitoringInterface(); }, updateInterval * 1000);
     });
 }
 
@@ -136,22 +146,21 @@ function fetchServices(host, services) {
         services = filterServices(services, service_status_filter);
     }
 
-    if (services.length) {
-        for (var service in services) {
-            var service_status = services[service].current_state;
-            var last_check = Number(services[service].last_check);
-            service_status = (last_check == 0) ? 4 : service_status;
-            var host_col = (first_row) ? `<div class="col-lg-1 col-4 flex-vertical-center host-border host-state-${host.current_state}">${host.host_name}</div>` : ``;
-            var col_offset = (!first_row) ? `offset-lg-1 offset-4` : ``;
-            var host_divider = (first_row) ? `host-divider` : ``;
-            var duration = Number(services[service].last_update) - Number(services[service].last_state_change);
-            duration = new Date(duration * 1000).toISOString().substr(11, 8);
-            var next_check = Number(services[service].next_check);
-            var attempt = services[service].current_attempt + "/" + services[service].max_attempts;
-            var status_information = services[service].plugin_output;
-            var service_name = services[service].service_description
+    for (var service in services) {
+        var service_status = services[service].current_state;
+        var last_check = Number(services[service].last_check);
+        service_status = (last_check == 0) ? 4 : service_status;
+        var host_col = (first_row) ? `<div class="col-lg-1 col-4 flex-vertical-center host-border host-state-${host.current_state}">${host.host_name}</div>` : ``;
+        var col_offset = (!first_row) ? `offset-lg-1 offset-4` : ``;
+        var host_divider = (first_row) ? `host-divider` : ``;
+        var duration = Number(services[service].last_update) - Number(services[service].last_state_change);
+        duration = new Date(duration * 1000).toISOString().substr(11, 8);
+        var next_check = Number(services[service].next_check);
+        var attempt = services[service].current_attempt + "/" + services[service].max_attempts;
+        var status_information = services[service].plugin_output;
+        var service_name = services[service].service_description
 
-            html += `<div class="row monitor ${host_divider}">
+        html += `<div class="row monitor ${host_divider}">
                     ${host_col}
                     <div class="col-lg-1 col-4 ${col_offset} pr-0 flex-vertical-center service-state-${service_status}">${service_name}</div>
                     <div class="col-lg-1 col-4 pr-2 pl-1 flex-vertical-center service-state-${service_status}">
@@ -174,10 +183,7 @@ function fetchServices(host, services) {
                     </div>
                  </div>`;
 
-            var first_row = false;
-        }
-    } else {
-        //html += `<div class="row monitor host-divider"><div class="col-lg-1 col-4 flex-vertical-center host-border host-state-${host.current_state}">${host.host_name}</div></div>`;
+        var first_row = false;
     }
 
 
@@ -383,27 +389,35 @@ $('select').on('change', function () {
 
 
 
-$(function() {
+$(function () {
     fetchAll();
 
     $('.host-total-filter').on('click', function () {
         host_status_filter = $(this).data("state");
+        $('.selected-host-filter').removeClass('selected-host-filter');
+        $(this).parent().addClass('selected-host-filter');
         updateMonitoringInterface();
     });
 
     $('.service-total-filter').on('click', function () {
         service_status_filter = $(this).data("state");
+        $('.selected-service-filter').removeClass('selected-service-filter');
+        $(this).parent().addClass('selected-service-filter');
         updateMonitoringInterface();
     });
 
     $('#host_types_total').on('click', function () {
         host_status_filter = null;
+        $('.selected-host-filter').removeClass('selected-host-filter');
+        $(this).parent().addClass('selected-host-filter');
         updateMonitoringInterface();
     });
 
     $('#service_types_total').on('click', function () {
         service_status_filter = null;
+        $('.selected-service-filter').removeClass('selected-service-filter');
+        $(this).parent().addClass('selected-service-filter');
         updateMonitoringInterface();
     });
-    
+
 });

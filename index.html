@@ -13,7 +13,7 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css?v=0.1">
 
     <title>Jasmin</title>
@@ -33,7 +33,7 @@
         </div>
         <div class="content col-lg-12 col-12 pt-10">
             <div class="row main-container">
-                <div class="col-12 main p-0 h-100"></div>
+                <div class="col-12 main p-0"></div>
             </div>
             <div class="row bot-bar">
                 <div class="col-12 summary">
@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="col pl-2 pr-2">
                                     <label for="host_problems_total" class="host-total-label">All Problems</label>
-                                    <input type="text" class="form-control total-label" id="host_problems_total" readonly>
+                                    <input type="text" class="form-control total-label host-total-filter" data-state="all" id="host_problems_total" readonly>
                                 </div>
                                 <div class="col pl-2 pr-2">
                                     <label for="host_types_total" class="host-total-label">All Types</label>
@@ -115,7 +115,7 @@
                                 </div>
                                 <div class="col pl-2 pr-2">
                                     <label for="service_problems_total" class="host-total-label">All Problems</label>
-                                    <input type="text" class="form-control total-label" id="service_problems_total" readonly>
+                                    <input type="text" class="form-control total-label service-total-filter" data-state="all" id="service_problems_total" readonly>
                                 </div>
                                 <div class="col pl-2 pr-2">
                                     <label for="service_types_total" class="host-total-label">All Types</label>
@@ -131,9 +131,9 @@
 
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="js/script.js"></script>
 
 
